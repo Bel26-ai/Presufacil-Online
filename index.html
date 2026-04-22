@@ -9,36 +9,52 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-slate-100 text-slate-900">
-    <nav class="bg-white border-b p-4 shadow-sm text-center">
+    <nav class="bg-white border-b p-4 shadow-sm flex justify-between items-center">
         <h1 class="text-xl font-bold text-blue-600">PresuFácil Pro</h1>
+        <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-bold">SaaS v1.0</span>
     </nav>
+
     <main class="max-w-md mx-auto p-6">
-        <div class="bg-white rounded-2xl shadow-xl p-6 space-y-4">
+        <div class="bg-white rounded-2xl shadow-xl p-6 space-y-4 border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700">Calculadora de Costos</h2>
+            
             <input type="text" id="material" placeholder="Material (Ej: Hierro 20x20)" class="w-full border p-3 rounded-xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500">
+            
             <div class="grid grid-cols-2 gap-2">
                 <input type="number" id="cantidad" placeholder="Cantidad" class="border p-3 rounded-xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500">
                 <input type="number" id="precio" placeholder="Precio x Un." class="border p-3 rounded-xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500">
             </div>
+            
             <input type="number" id="manoDeObra" placeholder="Mano de Obra ($)" class="w-full border p-3 rounded-xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500">
             
             <button onclick="calcular()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition">
-                Calcular Presupuesto
+                Calcular Ahora
             </button>
 
-            <div id="resultado" class="hidden bg-blue-50 p-4 rounded-xl border border-blue-200">
-                <p class="text-xs font-bold text-blue-400 uppercase">Total Estimado</p>
-                <h2 id="precioFinal" class="text-3xl font-black text-blue-900"></h2>
-                <button onclick="enviarWhatsApp()" class="w-full mt-4 bg-[#25D366] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2">
+            <div id="resultado" class="hidden bg-blue-600 p-6 rounded-xl text-white shadow-inner">
+                <p class="text-xs font-bold opacity-80 uppercase tracking-widest">Total Estimado</p>
+                <h2 id="precioFinal" class="text-4xl font-black mb-4"></h2>
+                <button onclick="enviarWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-md">
                     Enviar por WhatsApp
                 </button>
+            </div>
+
+            <div class="mt-8 border-t pt-6 text-center">
+                <p class="text-xs text-slate-500 mb-3 font-medium">¿Querés guardar tus presupuestos y usar tu propio logo?</p>
+                <a href="https://www.mercadopago.com.ar/" target="_blank" class="inline-block w-full bg-amber-400 text-amber-900 font-bold py-3 rounded-xl shadow-sm hover:bg-amber-500 transition scale-100 hover:scale-105">
+                    🚀 Activar Plan Pro
+                </a>
+                <div class="flex justify-center gap-3 mt-4 opacity-60 grayscale">
+                    <img src="https://img.icons8.com/color/48/000000/visa.png" class="h-5"/>
+                    <img src="https://img.icons8.com/color/48/000000/mastercard.png" class="h-5"/>
+                    <img src="https://img.icons8.com/color/48/000000/mercado-pago.png" class="h-5"/>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
         function calcular() {
-            console.log("Calculando..."); // Esto es para ver si el botón responde
-            const mat = document.getElementById('material').value;
             const cant = document.getElementById('cantidad').value;
             const pre = document.getElementById('precio').value;
             const mano = document.getElementById('manoDeObra').value;
@@ -50,14 +66,14 @@
                 document.getElementById('precioFinal').innerText = formatter.format(total);
                 document.getElementById('resultado').classList.remove('hidden');
             } else {
-                alert("Completá todos los campos, Belén.");
+                alert("Belén, completá todos los números para calcular.");
             }
         }
 
         function enviarWhatsApp() {
-            const mat = document.getElementById('material').value;
+            const mat = document.getElementById('material').value || "Trabajo";
             const total = document.getElementById('precioFinal').innerText;
-            const msj = `Hola! El presupuesto para *${mat}* es de *${total}*. Incluye materiales y mano de obra.`;
+            const msj = `Hola! 👋 El presupuesto para *${mat}* es de *${total}*. (Calculado con PresuFácil Pro)`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msj)}`, '_blank');
         }
     </script>
